@@ -1,0 +1,5 @@
++ Add pooling system
++ Change player image
++ Add resposnsive canvas layout
+
+* Add sliders for obstacle max degree, gap distance and spawn time

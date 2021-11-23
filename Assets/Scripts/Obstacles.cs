@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class Obstacles : MonoBehaviour
 {
-    public GameObject obstacle;
+    public List<GameObject> obstaclePrefabsList;
+    public Transform obstaclesContainer;
 
-    float obstacleMaxMinY = 3;
-    float obstacleTopBottomMaxRotation = 90;
-    float obstacleMinMaxRotation = 10;
-    float obstacleSpawnTime = 2;
-    float obstacleTimeToDestroy = 8;
+    private float obstacleMaxMinY = 3;
+    private float obstacleMinMaxRotation = 15;
+    private float obstacleSpawnTime = 2;
+    private float obstacleTimeToDestroy = 8;
 
-    void Start()
+    [HideInInspector]
+    public int gameNumber = 1;
+
+    public IEnumerator SpawnObstacles()
     {
-        StartCoroutine(SpawnObstacles());
-    }
+        int currentGameNumber = gameNumber;
 
-    IEnumerator SpawnObstacles()
-    {
-        while (true)
+        while (currentGameNumber == gameNumber)
         {
             StartCoroutine(SpawnAndMoveSingleObstacle());
             yield return new WaitForSeconds(obstacleSpawnTime);
@@ -31,13 +31,7 @@ public class Obstacles : MonoBehaviour
         yield return new WaitForFixedUpdate();
 
         var obstacleStartPosition = new Vector3(12, Random.Range(-obstacleMaxMinY, obstacleMaxMinY), 0);
-        var obstacleObj = Instantiate(obstacle, obstacleStartPosition, Quaternion.Euler(0, 0, Random.Range(-obstacleMinMaxRotation, obstacleMinMaxRotation)));
-        var obstacleScript = obstacleObj.GetComponent<ObstacleClass>();
-
-        var randRotation = Random.Range(0, obstacleTopBottomMaxRotation);
-        Debug.Log(randRotation);
-        obstacleScript.obstacleTop.transform.localEulerAngles = new Vector3(0, randRotation, -90);
-        obstacleScript.obstacleBottom.transform.localEulerAngles = new Vector3(0, randRotation, -90);
+        var obstacleObj = Instantiate(obstaclePrefabsList[Random.Range(0, obstaclePrefabsList.Count)], obstacleStartPosition, Quaternion.Euler(0, 0, Random.Range(-obstacleMinMaxRotation, obstacleMinMaxRotation)), obstaclesContainer);
 
         var obstacleRB = obstacleObj.GetComponent<Rigidbody2D>();
         obstacleRB.velocity = new Vector2(-3, obstacleRB.velocity.y);
