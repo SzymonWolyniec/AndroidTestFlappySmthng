@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ScrollTexture : MonoBehaviour
 {
-    public float scrollSpeed = 0.5f;
-    Renderer objRenderer;
+    [SerializeField]
+    private float scrollSpeed = 0.5f;
+    private Renderer objRenderer;
 
-    private void Start()
+    void Start()
     {
         objRenderer = GetComponent<Renderer>();
     }

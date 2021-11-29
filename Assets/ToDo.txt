@@ -1,5 +1,14 @@
+To do:
+
 + Add pooling system
 + Change player image
-+ Add resposnsive canvas layout
 
 * Add sliders for obstacle max degree, gap distance and spawn time
+
+
+Did:
+
++ Add resposnsive canvas layout
++ Add Event System
++ Add Queue for canvas changing coroutines
+

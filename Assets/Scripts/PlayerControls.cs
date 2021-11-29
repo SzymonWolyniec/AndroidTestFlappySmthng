@@ -6,20 +6,22 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour
 {
 
-    public Rigidbody2D playerRigibody;
-    public LayerMask obstacleLayer;
-    public LayerMask scoreLayer;
+    [SerializeField]
+    private Rigidbody2D playerRigibody;
 
-    public TextMeshProUGUI scoreText;
-    public GameLifecycle GameScriptHandler;
+    [SerializeField]
+    private LayerMask obstaclesLayer, scoreLayer;
 
-    int score = 0;
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
 
+    private int score = 0;
     private Vector2 playerStartPos;
 
     private void Awake()
     {
         playerStartPos = this.transform.position;
+        EventManager.OnResetClicked += OnPlayAgain;
     }
 
     void Update()
@@ -40,13 +42,14 @@ public class PlayerControls : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if ((obstacleLayer & 1 << collider.gameObject.layer) == 1 << collider.gameObject.layer)
+        if ((obstaclesLayer & 1 << collider.gameObject.layer) == 1 << collider.gameObject.layer)
         {
             if (score > PlayerPrefs.GetInt("highscore", 0))
             {
                 PlayerPrefs.SetInt("highscore", score);
             }
-            GameScriptHandler.OnDied();
+
+            EventManager.OnPlayerDied();
         }
     }
 
@@ -62,7 +65,7 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    public void OnPlayAgain()
+    private void OnPlayAgain()
     {
         this.transform.position = playerStartPos;
         playerRigibody.velocity = new Vector2(0, 0);
