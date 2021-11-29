@@ -17,27 +17,23 @@ public class PlayerControls : MonoBehaviour
 
     private int score = 0;
     private Vector2 playerStartPos;
+    private float startRotation;
 
     private void Awake()
     {
         playerStartPos = this.transform.position;
+        startRotation = this.transform.eulerAngles.z;
         EventManager.OnResetClicked += OnPlayAgain;
     }
 
     void Update()
     {
-
-        if (Input.GetMouseButtonDown(0))
+        if (Input.anyKeyDown)
         {
             playerRigibody.velocity = new Vector2(0, 5);
         }
 
-        if (Input.touchCount > 0)
-        {
-            playerRigibody.velocity = new Vector2(0, 5);
-        }
-
-        this.transform.transform.localEulerAngles = new Vector3(0, 0, playerRigibody.velocity.y);
+        this.transform.transform.localEulerAngles = new Vector3(0, 0, playerRigibody.velocity.y + startRotation);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

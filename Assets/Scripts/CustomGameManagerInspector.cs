@@ -1,6 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
+
 [CustomEditor(typeof(Obstacles))]
 public class CustomGameManagerInspector : Editor
 {
@@ -19,3 +21,5 @@ public class CustomGameManagerInspector : Editor
     }
 
 }
+
+#endif

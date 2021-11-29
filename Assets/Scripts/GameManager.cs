@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Application.targetFrameRate = 90;
+        Application.targetFrameRate = 60;
         startHighScore.text = "High score: " + PlayerPrefs.GetInt("highscore", 0);
 
         StartCoroutine(CanvasCoroutineCoordinator());
